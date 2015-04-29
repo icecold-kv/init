@@ -1,0 +1,4 @@
+ls -l init wait
+echo 102 respawn
+./a.out wait
+echo hello wait
