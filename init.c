@@ -41,6 +41,11 @@ int main() {
 		default:
 			pids[l] = pid;
 			strcpy(path, "/tmp/");
+			tok = strtok(args[0],"/");
+			while (tok != NULL) {
+				args[0] = tok;
+				tok = strtok(NULL,"/");
+			}
 			strcat(path, args[0]);
 			sprintf(num,"%d",l++);
 			strcat(path, num);
@@ -48,7 +53,6 @@ int main() {
 			FILE *of = fopen(path,"w");
 			fprintf(of, "%d", pid);
 			fclose(of);
-			//sleep(1);
 		}	
 	}
 	fclose(conf);
@@ -59,9 +63,14 @@ int main() {
 		for (j=0; j<l; j++) {
 			if (pids[j] == pid) {
 				strcpy(str, progs[j]);
-				tok = strtok(str, " ");
+				args[0] = strtok(str, " ");
+				tok = strtok(args[0],"/");
+				while (tok != NULL) {
+					args[0] = tok;
+					tok = strtok(NULL,"/");
+				}
 				strcpy(path, "/tmp/");
-				strcat(path, tok);
+				strcat(path, args[0]);
 				sprintf(num,"%d",j);
 				strcat(path, num);
 				strcat(path, ".pid");
